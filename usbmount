@@ -15,7 +15,7 @@
 # PARTICULAR PURPOSE.
 #
 set -e
-exec > /dev/null 2>&1
+#exec > /dev/null 2>&1
 
 ######################################################################
 # Auxiliary functions
@@ -23,9 +23,10 @@ exec > /dev/null 2>&1
 # Log a string via the syslog facility.
 log()
 {
-    if [ $1 != debug ] || expr "$VERBOSE" : "[yY]" > /dev/null; then
-	logger -p user.$1 -t "usbmount[$$]" -- "$2"
-    fi
+    #if [ $1 != debug ] || expr "$VERBOSE" : "[yY]" > /dev/null; then
+	#logger -p user.$1 -t "usbmount[$$]" -- "$2"
+    #fi
+	echo $2
 }
 
 
@@ -51,13 +52,15 @@ MOUNTOPTIONS=
 FS_MOUNTOPTIONS=
 VERBOSE=no
 
-if [ -r /etc/usbmount/usbmount.conf ]; then
-    . /etc/usbmount/usbmount.conf
+log debug "starting usb automount"
+
+if [ -r /opt/usbmount/usbmount.conf ]; then
+    . /opt/usbmount/usbmount.conf
     log debug "loaded usbmount configurations"
 fi
 
 if [ "${ENABLED:-1}" -eq 0 ]; then
-    log info "usbmount is disabled, see /etc/usbmount/usbmount.conf"
+    log info "usbmount is disabled, see /opt/usbmount/usbmount.conf"
     exit 0
 fi
 
@@ -180,8 +183,8 @@ if [ "$1" = add ]; then
 			export UM_MOUNTOPTIONS="$options"
 			export UM_VENDOR="$vendor"
 			export UM_MODEL="$model"
-			log info "executing command: run-parts /etc/usbmount/mount.d"
-			run-parts /etc/usbmount/mount.d || :
+			log info "executing command: run-parts /opt/usbmount/mount.d"
+			run-parts /opt/usbmount/mount.d || :
 	    else
 			# No suitable mount point found.
 			log warning "no mountpoint found for $DEVNAME"
@@ -206,8 +209,8 @@ elif [ "$1" = remove ]; then
 		export UM_DEVICE="$DEVNAME"
 		export UM_MOUNTPOINT="$mountpoint"
 		export UM_FILESYSTEM="$fstype"
-		log info "executing command: run-parts /etc/usbmount/umount.d"
-		run-parts /etc/usbmount/umount.d || :
+		log info "executing command: run-parts /opt/usbmount/umount.d"
+		run-parts /opt/usbmount/umount.d || :
 	    fi
 	    break
 	fi

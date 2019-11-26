@@ -1,7 +1,10 @@
 # Install
 
+pacman -S lockfile-progs
 ln -s /opt/usbmount/90-usbmount.rules /etc/udev/rules.d/
 ln -s /opt/usbmount/usbmount\@.service /etc/systemd/system/
+mkdir -p /mnt/usb{0..7}
+udevadm control --reload-rules && udevadm trigger
 
 # Addition
 
