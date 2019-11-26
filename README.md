@@ -1,3 +1,16 @@
+# Install
+
+ln -s /opt/usbmount/90-usbmount.rules /etc/udev/rules.d/
+ln -s /opt/usbmount/usbmount\@.service /etc/systemd/system/
+
+# Addition
+
+usbmount has been modified to symlink the last mounted device to MOUNTLAST
+Warning: on umount, the symlink is not yet updated to the previously inserted device.
+The symlink is only updated on a new device mount.
+This should be fixed obviously.
+
+
 # USBmount
 
 The USBmount package automatically mounts USB mass storage devices (e.g.,

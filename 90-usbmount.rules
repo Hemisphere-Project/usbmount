@@ -1,4 +1,5 @@
 # Rules for USBmount -*- conf -*-
+# Add it to /etc/udev/rules.d/
 
 KERNEL=="sd*", DRIVERS=="sbp2",     ACTION=="add",  PROGRAM="/bin/systemd-escape -p --template=usbmount@.service $env{DEVNAME}", ENV{SYSTEMD_WANTS}+="%c"
 KERNEL=="sd*", SUBSYSTEMS=="usb",   ACTION=="add",  PROGRAM="/bin/systemd-escape -p --template=usbmount@.service $env{DEVNAME}", ENV{SYSTEMD_WANTS}+="%c"

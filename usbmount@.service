@@ -6,6 +6,6 @@ After=%i.device
 Type=oneshot
 TimeoutStartSec=0
 Environment=DEVNAME=/%I
-ExecStart=/usr/share/usbmount/usbmount add
-ExecStop=/usr/share/usbmount/usbmount remove
+ExecStart=/opt/usbmount/usbmount add
+ExecStop=/opt/usbmount/usbmount remove
 RemainAfterExit=yes
